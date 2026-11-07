@@ -1,0 +1,18 @@
+# Project-specific (from your original repo)
+.engram/
+
+# Operating System / Editor
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# Build artifacts
+backend/target/
+frontend/dist/
+frontend/node_modules/
+
+# Local env / secrets
+*.local
+.env
+.workbuddy/

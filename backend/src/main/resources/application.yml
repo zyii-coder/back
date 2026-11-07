@@ -1,0 +1,49 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: lost-and-found-backend
+
+  # ---- Default profile: lightweight in-memory H2 for local dev ----
+  datasource:
+    url: jdbc:h2:mem:lostfound;DB_CLOSE_DELAY=-1;MODE=MySQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: update     # auto-create/update schema from entities
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    defer-datasource-initialization: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console     # browse the dev DB at http://localhost:8080/h2-console
+
+# ---- Application-specific config (default profile) ----
+app:
+  jwt:
+    # IMPORTANT: replace with a long random secret (>= 32 bytes) in production.
+    # This default is only for local development.
+    secret: "dev-only-secret-change-me-to-a-very-long-random-string-at-least-32-bytes"
+    expiration-ms: 86400000   # 24h
+
+---
+# ---- Optional: MySQL profile (activate with --spring.profiles.active=mysql) ----
+spring:
+  config:
+    activate:
+      on-profile: mysql
+  datasource:
+    url: jdbc:mysql://localhost:3306/lost_found?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
